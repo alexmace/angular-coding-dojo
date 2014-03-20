@@ -6,19 +6,23 @@
 			  $scope.woo = 'Hello Wooweb';
 			  $scope.woots = ['first','second'];
 			  $scope.addWoot = function(){
+			  	console.log('adding a woot');
 			  	$scope.woots.push($scope.woo);
 			  	$scope.woo = '';
+			  }
+			  $scope.removeWoot = function(woot){
+     			var index = $scope.woots.indexOf(woot);
+			  	$scope.woots.splice(index,1);
 			  }
 			}]);
 		</script>
 	</head>
 	<body>
           <div ng-controller="twitter">
-           {{woo}}
            <input type='text' ng-model='woo' />
-           <button ng-click='addWoot'>Woo</button>
+           <button ng-click='addWoot()'>Woo</button>
            <ul>
-           	<li ng-repeat='woot in woots'>{{woot}}</li>
+           	<li ng-repeat='woot in woots'>{{woot}} <a ng-click='removeWoot(woot)' >-</a></li>
            </ul>
           </div>
 	</body>
