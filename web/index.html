@@ -4,7 +4,11 @@
 		<script>
 			angular.module('wooweb', []).controller('twitter', ['$scope', function($scope) {
 			  $scope.woo = 'Hello Wooweb';
-			  $scope.woots = 
+			  $scope.woots = ['first','second'];
+			  $scope.addWoot = function(){
+			  	$scope.woots.push($scope.woo);
+			  	$scope.woo = '';
+			  }
 			}]);
 		</script>
 	</head>
@@ -12,6 +16,10 @@
           <div ng-controller="twitter">
            {{woo}}
            <input type='text' ng-model='woo' />
+           <button ng-click='addWoot'>Woo</button>
+           <ul>
+           	<li ng-repeat='woot in woots'>{{woot}}</li>
+           </ul>
           </div>
 	</body>
 </html>
