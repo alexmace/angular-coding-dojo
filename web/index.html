@@ -1,12 +1,15 @@
 <html ng-app="wooweb">
 	<head>
-			<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-
-    <script>
-      angular.module('wooweb');
-    </script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+		<script>
+			angular.module('wooweb', []).controller('twitter', ['$scope', function($scope) {k
+			  $scope.woo = 'Hello Wooweb';
+			}]);
+		</script>
 	</head>
-  <body>
-    fooo
-  </body>
+	<body>
+          <div ng-controller="twitter">
+           {{woo}}
+          </div>
+	</body>
 </html>
