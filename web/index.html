@@ -2,28 +2,41 @@
 	<head>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
 		<script>
-			angular.module('wooweb', []).controller('twitter', ['$scope', function($scope) {
-			  $scope.woo = 'Hello Wooweb';
+			var app = angular.module('wooweb', []);
+
+			app.controller('twitter', ['$scope', '$http', function($scope, $http) {
 			  $scope.woots = ['first','second'];
+
 			  $scope.addWoot = function(){
-			  	console.log('adding a woot');
 			  	$scope.woots.push($scope.woo);
 			  	$scope.woo = '';
 			  }
-			  $scope.removeWoot = function(woot){
+
+			  $scope.fuckWoo = function() {
+			  	$http.get('http://foaas.herokuapp.com/off/'+$scope.woo+'/WooWeb').success(function(data, status) {
+			  			console.log(status);
+			  			console.log(data);
+			  			$scope.woots.push(data.message);
+			  		});
+			  }
+
+			  $scope.removeWoot = function(woot) {
      			var index = $scope.woots.indexOf(woot);
 			  	$scope.woots.splice(index,1);
 			  }
+
 			}]);
 		</script>
 	</head>
 	<body>
           <div ng-controller="twitter">
            <input type='text' ng-model='woo' />
-           <button ng-click='addWoot()'>Woo</button>
+           <button ng-click='addWoot()'>Don't Fuck</button>
+           <button ng-click='fuckWoo()'>Fuck Who?</button>
            <ul>
-           	<li ng-repeat='woot in woots'>{{woot}} <a ng-click='removeWoot(woot)' >-</a></li>
+           	<li ng-repeat='woot in woots track by $index'>{{woot}} <a ng-click='removeWoot(woot)' >[Remove]</a></li>
            </ul>
+
           </div>
 	</body>
 </html>
