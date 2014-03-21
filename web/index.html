@@ -14,14 +14,11 @@
 
 			  $scope.fuckWoo = function() {
 			  	$http.get('http://foaas.herokuapp.com/off/'+$scope.woo+'/WooWeb').success(function(data, status) {
-			  			console.log(status);
-			  			console.log(data);
 			  			$scope.woots.push(data.message);
 			  		});
 			  }
 
-			  $scope.removeWoot = function(woot) {
-     			var index = $scope.woots.indexOf(woot);
+			  $scope.removeWoot = function(index, woot) {
 			  	$scope.woots.splice(index,1);
 			  }
 
@@ -30,12 +27,18 @@
 	</head>
 	<body>
           <div ng-controller="twitter">
-           <input type='text' ng-model='woo' />
+          	<form name="wooweb">
+           <input type='text' ng-model='woo' required />
            <button ng-click='addWoot()'>Don't Fuck</button>
            <button ng-click='fuckWoo()'>Fuck Who?</button>
+
+           <input type="text" ng-model='search' name="search" />
+       </form>
            <ul>
-           	<li ng-repeat='woot in woots track by $index'>{{woot}} <a ng-click='removeWoot(woot)' >[Remove]</a></li>
+           	<li ng-repeat='woot in woots | filter: search track by $index'>{{$index}} {{woot}} <a ng-click='removeWoot($index, woot)' >[Remove]</a></li>
            </ul>
+			{{search}}
+           <ng-pluralize count="woots.length" when = "{'0':'No Fucks At all :( :(', 'one': 'one person is fucking', 'other': '{} people are fucking.'}"></ng-pluralize>
 
           </div>
 	</body>
